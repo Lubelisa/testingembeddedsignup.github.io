@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Embedded Signup Quick Test</title>
+</head>
+<body>
+  <h1>Embedded Signup Demo</h1>
+  <p>Click the button below to launch the embedded signup flow.</p>
+
+  <!-- Launch button -->
+  <button id="launch-signup">Launch Signup</button>
+
+  <!-- SDK loading script -->
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId            : '2271359049968019', // Your App ID
+      autoLogAppEvents : true,
+      xfbml            : true,
+      version          : 'v23.0'
+    });
+  };
+  (function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+<!-- Embedded signup launch -->
+<script>
+  document.getElementById('launch-signup').onclick = function() {
+    FB.login(function(response) {
+      if (response && response.authResponse) {
+        alert('Signup flow launched successfully!');
+        console.log('response:', response);
+      } else {
+        alert('Failed to launch signup.');
+        console.log('response:', response);
+      }
+    }, {
+      config_id: '723074993961237', // Your Configuration ID
+      scope: 'whatsapp_business_management',
+      override_default_response_type: true,
+      response_type: 'code',
+      extras: {
+        feature: 'whatsapp_embedded_signup',
+        setup: {},
+        sessionInfoVersion: '3'
+      }
+    });
+  };
+</script>
+</body>
+</html>
